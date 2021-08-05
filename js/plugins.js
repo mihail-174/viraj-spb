@@ -1,0 +1,2 @@
+window.ready=function(t){"loading"!==document.readyState?t():document.addEventListener?document.addEventListener("DOMContentLoaded",t):document.attachEvent("onreadystatechange",function(){"complete"===document.readyState&&t()})},function(n){window.lightGallery=function(t,e){n(t).find(e).each(function(){n(this).attr("data-sub-html",n(this).find("img").attr("title"))}),n(t).lightGallery({selector:e,download:!1,fullScreen:!1,zoom:!1,share:!1,thumbnail:!0})}}(jQuery);
+//# sourceMappingURL=maps/plugins.js.map

@@ -1,0 +1,2 @@
+.block-questions .block__content{display:grid;grid-template-columns:repeat(var(--grid-column),1fr);gap:var(--grid-gap);align-items:flex-start}.block-questions .block__info{grid-column:span 7}.block-questions .block__info p:nth-last-child(-n+1){margin-bottom:0}.block-questions .most-questions{grid-column:8/-1}
+/*# sourceMappingURL=maps/block-questions.css.map */

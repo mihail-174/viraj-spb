@@ -1,0 +1,2 @@
+.block-production{display:grid;grid-template-columns:repeat(var(--grid-column),1fr);gap:var(--grid-gap)}.block-production .block__content,.block-production .block__header{display:contents}.block-production h2{grid-column:span 6}.block-production p{margin:0;grid-column:span 8}.block-production img{grid-row:1/4;grid-column:9/span 4;align-self:center}
+/*# sourceMappingURL=maps/block-production.css.map */

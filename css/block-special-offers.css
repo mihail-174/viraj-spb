@@ -1,0 +1,2 @@
+.block-special-offers .block__content{display:grid;grid-template-columns:repeat(var(--grid-column),1fr)}.block-special-offers .block__content>p{grid-column:1/-1}.block-special-offers .btn{width:15.625rem}.block-special-offers .block__footer{margin-top:.5rem}
+/*# sourceMappingURL=maps/block-special-offers.css.map */

@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Главная</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/vnd.microsoft.icon">
+    <script src="https://yastatic.net/browser-updater/v1/script.js" charset="utf-8"></script>
+    <script>var yaBrowserUpdater = new ya.browserUpdater.init({"lang":"ru","browsers":{"yabrowser":"15.12","chrome":"54","ie":"10","opera":"41","safari":"8","fx":"49","iron":"35","flock":"Infinity","palemoon":"25","camino":"Infinity","maxthon":"4.5","seamonkey":"2.3"},"theme":"yellow"});</script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  </head>
+  <body class="front">
+    <!-- *****************************************************-->
+    <!-- СЛЕДУЮЩИЙ КОД НА САЙТ НЕ НУЖНО-->
+    <!-- ЭТО ДЛЯ ТОЛЬКО НА ВРЕМЯ НАПИСАНИЯ ВЕРСТКИ-->
+    <!-- *****************************************************-->
+    <script>
+      function ready(callback) {
+          // in case the document is already rendered
+          if ( document.readyState !== 'loading' ) {
+              callback();
+          }
+          // modern browsers
+          else if ( document.addEventListener ) {
+              document.addEventListener('DOMContentLoaded' , callback);
+          }
+          // IE <= 8
+          else {
+              document.attachEvent('onreadystatechange' , function () {
+                  if ( document.readyState === 'complete' ) callback();
+              });
+          }
+      };
+      ready(() => {
+      
+          // ФУНКЦИЯ ВЫВОДА СПИСКА ФАЙЛОВ CSS И JS
+          window.printListCssFiles = function printListCssFiles(style) {
+              var body = document.body.innerHTML;
+              var pattern = new RegExp("(?<=\<\!\-\-include: ).*?(?=\-\-\>)", 'gi');
+              var comment = Array.from(new Set(body.match(pattern)));
+              console.groupCollapsed("ВЫВОД СПИСКА ФАЙЛОВ CSS И JS");
+              console.log(comment);
+              console.groupEnd();
+              var new_array_name_css_file = [];
+              var new_array_name_js_file = [];
+      
+              // ВЫВОДИМ CSS И JS НА СТРАНИЦУ
+              comment.forEach(function (item) {
+      
+                  var array_name_css_file = item.match(/(?<=cssfile\[).*?(?=\])/gi);
+                  if (array_name_css_file[0]) {
+                      array_name_css_file = array_name_css_file[0].split(", ");
+                      array_name_css_file.map(function (file) {
+                          // console.log( file );
+                          new_array_name_css_file.push(`css/${file}.css`);
+                      });
+                  } else {
+                      array_name_css_file = false;
+                  };
+                  // console.log(array_name_css_file);
+      
+                  var array_name_js_file = item.match(/(?<=scriptfile\[).*?(?=\])/gi);
+                  if ( array_name_js_file[0] ) {
+                      array_name_js_file = array_name_js_file[0].split(", ");
+                      array_name_js_file.map(function (file) {
+                          new_array_name_js_file.push(`js/${file}.js`);
+                      });
+                  } else {
+                      array_name_js_file = false;
+                  };
+                  // console.log(array_name_js_file);
+              });
+      
+              console.groupCollapsed("новый список css файлов");
+              new_array_name_css_file = Array.from(new Set(new_array_name_css_file));
+              console.log(new_array_name_css_file);
+              console.groupEnd();
+      
+              console.groupCollapsed("новый список js файлов");
+              new_array_name_js_file = Array.from(new Set(new_array_name_js_file));
+              console.log(new_array_name_js_file);
+              console.groupEnd();
+      
+              new_array_name_css_file.map(function (file) {
+                  if ( file.match(/--global/gi) ) {
+                      let tagLink = document.createElement("link");
+                      tagLink.rel = "stylesheet";
+                      tagLink.type = "text/css";
+                      tagLink.href = file.replace(" --global", "");
+                      document.body.prepend(tagLink);
+                  } else {
+                      let tagLink = document.createElement("link");
+                      tagLink.rel = "stylesheet";
+                      tagLink.type = "text/css";
+                      tagLink.href = file;
+                      document.body.appendChild(tagLink);
+                  }
+              });
+      
+              new_array_name_js_file.map(function (file) {
+                  if ( file.match(/--global/gi) ) {
+                      let tagScript = document.createElement("script");
+                      tagScript.src = file.replace(" --global", "");
+                      tagScript.async = false;
+                      document.body.prepend(tagScript);
+                  } else {
+                      let tagScript = document.createElement("script");
+                      tagScript.src = file;
+                      tagScript.async = false;
+                      document.body.appendChild(tagScript);
+                  }
+              });
+      
+          }
+      
+          printListCssFiles(1);
+      
+      });
+    </script>
+    <!--include: cssfile[style] scriptfile[]-->
+    <!--include: cssfile[] scriptfile[plugins]-->
+    <!--include: cssfile[] scriptfile[theme]-->
+    <!--include: cssfile[header] scriptfile[]-->
+    <!-- header-->
+    <div class="header">
+      <div class="header__top">
+        <div class="header__search">
+          <form>
+            <div class="form-item">
+              <input type="text" placeholder="Фраза для поиска" class="form-text">
+            </div>
+            <div class="form-actions">
+              <input type="button" class="form-submit">
+            </div>
+          </form>
+        </div>
+        <div class="header__location">г.Санкт-Петербург, пр.Елизарова, д.36а</div><a href="mailto:amo@viraj-spb.ru" class="header__email">amo@viraj-spb.ru</a><a href="tel:+7 812 455-41-02" class="header__phone">+7 812 455-41-02</a>
+      </div>
+      <div class="header__bottom">
+        <div class="header__logo"><img src="img/logo-header.png"></div>
+        <ul class="header__menu">
+          <li><a href="#">Услуги</a></li>
+          <li><a href="#">Продукция</a></li>
+          <li><a href="#">Цены</a></li>
+          <li><a href="#">Наши работы</a></li>
+          <li><a href="#">Акции</a></li>
+          <li><a href="#">Отзывы</a></li>
+          <li><a href="#">О компании</a></li>
+          <li><a href="#">Контакты</a></li>
+        </ul>
+      </div>
+    </div>
+    <!-- КОНЕЦ: header-->
+    <main>
+      <!-- block-promo-->
+      <div class="block block-promo">
+        <div class="block__content">
+          <!--include: cssfile[promo] scriptfile[]-->
+          <!-- promo-->
+          <div class="promo">
+            <div class="promo__slide"><img src="img/promo-bg.jpg" class="promo__background" alt="" role="presentation"/><img src="img/promo-slide-01.png" class="promo__img" alt="" role="presentation"/>
+              <div class="promo__info">
+                <div class="promo__title">Световые стеллы
+                </div>
+                <div class="promo__description">Рекламная стела - отдельно стоящая трёхмерная вертикальная конструкция, основу которой составляют один или несколько световых коробов различных конфигураций. Преимущества данной конструкции — стопроцентная обозреваемость, возможность установки съёмных элементов и отсутствие каких-либо ограничений «в пространстве».
+                </div>
+                <div class="promo__btns"><a href="#" class="btn btn-secondary">Подробнее</a><a href="#" class="btn btn-primary">Рассчитать стоимость</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- КОНЕЦ: promo-->
+        </div>
+      </div>
+      <!-- КОНЕЦ: block-promo-->
+      <!--include: cssfile[block] scriptfile[]-->
+      <!--include: cssfile[block-production] scriptfile[]-->
+      <!-- block-production-->
+      <div class="block block-production">
+        <div class="block__header">
+          <h2 class="block__title">ИЗГОТОВЛЕНИЕ НАРУЖНОЙ РЕКЛАМЫ В САНКТ-ПЕТЕРБУРГЕ
+          </h2>
+        </div>
+        <div class="block__content">
+          <p>Человек, который дорожит своим бизнесом, ни за что в жизни не станет экономить на рекламе. Но такое многообразие способов рекламы товаров и услуг заставляет людей долго анализировать и выбирать изготовителя.</p>
+          <p>Рекламно - производственная компания «Вираж» специализируется на изготовлении и размещении наружной рекламы в Санкт-Петербурге, разработке и проведении комплексных рекламных кампаний, а также подготовке соответствующей проектной и разрешительной документации. Мы имеем собственную производственную базу и производим объекты наружной рекламы из современных и долговечных материалов.</p><img src="img/block-production.png">
+        </div>
+      </div>
+      <!-- КОНЕЦ: block-production-->
+      <!--include: cssfile[block] scriptfile[]-->
+      <!--include: cssfile[block-services] scriptfile[]-->
+      <!-- block-services-->
+      <div class="block block-services block-section">
+        <div class="block__content">
+          <!--include: cssfile[teaser-services] scriptfile[]-->
+          <!-- teaser-services-->
+          <div class="teaser-services">
+            <div class="field-image"><img src="img/block-services/01.png"></div>
+            <div class="field-title">Световая реклама</div>
+            <ul class="field-term">
+              <li><a href="#">Изготовление вывесок</a></li>
+              <li><a href="#">Световые панели</a></li>
+              <li><a href="#">Световые короба</a></li>
+              <li><a href="#">Световые стеллы</a></li>
+            </ul>
+          </div>
+          <div class="teaser-services">
+            <div class="field-image"><img src="img/block-services/02.png"></div>
+            <div class="field-title">Монтаж и ремонт</div>
+            <ul class="field-term">
+              <li><a href="#">Монтаж и демонтаж конструкций</a></li>
+              <li><a href="#">Клининг вывесок</a></li>
+              <li><a href="#">Ремонт вывесок</a></li>
+            </ul>
+          </div>
+          <div class="teaser-services">
+            <div class="field-image"><img src="img/block-services/03.png"></div>
+            <div class="field-title">Печать</div>
+            <ul class="field-term">
+              <li><a href="#">Широкоформатная печать</a></li>
+              <li><a href="#">Оклейка автомобилей</a></li>
+              <li><a href="#">Печать баннера</a></li>
+            </ul>
+          </div>
+          <div class="teaser-services">
+            <div class="field-image"><img src="img/block-services/04.png"></div>
+            <div class="field-title">Производство</div>
+            <ul class="field-term">
+              <li><a href="#">Лазерная гравировка</a></li>
+              <li><a href="#">Фрезерная резка</a></li>
+              <li><a href="#">Лазерная резка</a></li>
+              <li><a href="#">Формовка</a></li>
+            </ul>
+          </div>
+          <div class="teaser-services">
+            <div class="field-image"><img src="img/block-services/05.png"></div>
+            <div class="field-title">Эксклюзивные решения</div>
+            <ul class="field-term">
+              <li><a href="#">Airsystem - живая вывеска</a></li>
+              <li><a href="#">Вывески из металла</a></li>
+              <li><a href="#">Лед-неон вывески</a></li>
+              <li><a href="#">Smart вывески</a></li>
+            </ul>
+          </div>
+          <div class="teaser-services">
+            <div class="field-image"><img src="img/block-services/06.png"></div>
+            <div class="field-title">Стенды и таблички</div>
+            <ul class="field-term">
+              <li><a href="#">Стенды и планшеты</a></li>
+              <li><a href="#">Таблички</a></li>
+            </ul>
+          </div>
+          <div class="teaser-services">
+            <div class="field-image"><img src="img/block-services/07.png"></div>
+            <div class="field-title">Услуги</div>
+            <ul class="field-term">
+              <li><a href="#">Согласование наруж. рекламы в СПБ</a></li>
+              <li><a href="#">Согласование наруж. рекламы в ЛО</a></li>
+              <li><a href="#">Согласование эл. благоустройства</a></li>
+            </ul>
+          </div>
+          <div class="teaser-services">
+            <div class="field-image"><img src="img/block-services/08.png"></div>
+            <div class="field-title">Разработка проектов</div>
+            <ul class="field-term">
+              <li><a href="#">Разработка проектной документации</a></li>
+              <li><a href="#">Разработка дизайн макетов</a></li>
+              <li><a href="#">Реклама для застройщиков</a></li>
+            </ul>
+          </div>
+          <!-- КОНЕЦ: teaser-services-->
+        </div>
+      </div>
+      <!-- КОНЕЦ: block-services-->
+      <!--include: cssfile[block-calculate-cost] scriptfile[block-calculate-cost]-->
+      <!-- block-calculate-cost-->
+      <div class="block block-calculate-cost">
+        <div class="block__content">
+          <!--include: cssfile[arrows] scriptfile[]-->
+          <!-- arrows-->
+          <div class="arrow-next"></div>
+          <div class="arrow-prev"></div>
+          <!-- КОНЕЦ: arrows-->
+          <div class="block__slider">
+            <div class="block__slider-wrapper">
+              <!--include: cssfile[teaser-calculate-cost] scriptfile[]-->
+              <!--include: cssfile[fields] scriptfile[]-->
+              <!-- teaser-calculate-cost-->
+              <div class="teaser-calculate-cost">
+                <div class="field-image"><img src="img/block-calculate-cost/01.png"></div>
+                <div class="field-title">Световая реклама</div>
+                <div class="field-description">Рассчитайте стоимость вывески с помощью онлайн калькулятора</div><a href="#" class="btn btn-primary btn-sm">Открыть калькулятор</a>
+              </div>
+              <div class="teaser-calculate-cost">
+                <div class="field-image"><img src="img/block-calculate-cost/02.png"></div>
+                <div class="field-title">Расчет световых панелей</div>
+                <div class="field-description">Рассчитайте стоимость световой панели с помощью онлайн калькулятора</div><a href="#" class="btn btn-primary btn-sm">Открыть калькулятор</a>
+              </div>
+              <div class="teaser-calculate-cost">
+                <div class="field-image"><img src="img/block-calculate-cost/03.png"></div>
+                <div class="field-title">Расчет табличек</div>
+                <div class="field-description">Рассчитайте стоимость вывески с помощью онлайн калькулятора</div><a href="#" class="btn btn-primary btn-sm">Открыть калькулятор</a>
+              </div>
+              <div class="teaser-calculate-cost">
+                <div class="field-image"><img src="img/block-calculate-cost/01.png"></div>
+                <div class="field-title">Световая реклама</div>
+                <div class="field-description">Рассчитайте стоимость вывески с помощью онлайн калькулятора</div><a href="#" class="btn btn-primary btn-sm">Открыть калькулятор</a>
+              </div>
+              <div class="teaser-calculate-cost">
+                <div class="field-image"><img src="img/block-calculate-cost/02.png"></div>
+                <div class="field-title">Расчет световых панелей</div>
+                <div class="field-description">Рассчитайте стоимость световой панели с помощью онлайн калькулятора</div><a href="#" class="btn btn-primary btn-sm">Открыть калькулятор</a>
+              </div>
+              <div class="teaser-calculate-cost">
+                <div class="field-image"><img src="img/block-calculate-cost/03.png"></div>
+                <div class="field-title">Расчет табличек</div>
+                <div class="field-description">Рассчитайте стоимость вывески с помощью онлайн калькулятора</div><a href="#" class="btn btn-primary btn-sm">Открыть калькулятор</a>
+              </div>
+              <div class="teaser-calculate-cost">
+                <div class="field-image"><img src="img/block-calculate-cost/01.png"></div>
+                <div class="field-title">Световая реклама</div>
+                <div class="field-description">Рассчитайте стоимость вывески с помощью онлайн калькулятора</div><a href="#" class="btn btn-primary btn-sm">Открыть калькулятор</a>
+              </div>
+              <div class="teaser-calculate-cost">
+                <div class="field-image"><img src="img/block-calculate-cost/02.png"></div>
+                <div class="field-title">Расчет световых панелей</div>
+                <div class="field-description">Рассчитайте стоимость световой панели с помощью онлайн калькулятора</div><a href="#" class="btn btn-primary btn-sm">Открыть калькулятор</a>
+              </div>
+              <div class="teaser-calculate-cost">
+                <div class="field-image"><img src="img/block-calculate-cost/03.png"></div>
+                <div class="field-title">Расчет табличек</div>
+                <div class="field-description">Рассчитайте стоимость вывески с помощью онлайн калькулятора</div><a href="#" class="btn btn-primary btn-sm">Открыть калькулятор</a>
+              </div>
+              <!-- КОНЕЦ: teaser-calculate-cost-->
+            </div>
+          </div>
+          <div class="block__dots">
+          </div>
+        </div>
+      </div>
+      <!-- КОНЕЦ: block-calculate-cost-->
+      <!--include: cssfile[block-advantages] scriptfile[]-->
+      <!-- block-advantages-->
+      <div class="block block-advantages block-section">
+        <div class="block__content">
+          <div class="block__info">
+            <h2 class="block__title">Преимущества работы с рк "вираж"
+            </h2>
+            <p>Опыт работы в производстве и размещении объектов наружной рекламы позволяет нашей компании гарантировать высокое качество рекламной продукции и оперативные сроки выполнения работ.</p>
+            <iframe src="https://www.youtube.com/embed/XakCFyjhGFM?controls=0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" width="100%" height="315" frameborder="0"></iframe>
+          </div>
+          <!--include: cssfile[advantages-work] scriptfile[]-->
+          <!-- advantages-work-->
+          <div class="advantages-work">
+            <div class="advantages-work__item">
+              <div class="field-image"><img src="img/block-services/01.png"></div>
+              <div class="field-title">Монтаж за 1 день</div>
+              <div class="field-description">Монтаж собственной бригадой с полной ответственностью за изделие</div>
+            </div>
+            <div class="advantages-work__item">
+              <div class="field-image"><img src="img/block-services/02.png"></div>
+              <div class="field-title">Гарантия</div>
+              <div class="field-description">Монтаж собственной бригадой с полной ответственностью за изделие</div>
+            </div>
+            <div class="advantages-work__item">
+              <div class="field-image"><img src="img/block-services/03.png"></div>
+              <div class="field-title">Собственное производство</div>
+              <div class="field-description">Работа по технологии, а не в подвале на коленках</div>
+            </div>
+            <div class="advantages-work__item">
+              <div class="field-image"><img src="img/block-services/04.png"></div>
+              <div class="field-title">Бесплатный макет</div>
+              <div class="field-description">Коммерческое предложение в 2-х ценовых вариантах. Посмотрите все наши акции.</div>
+            </div>
+            <div class="advantages-work__item">
+              <div class="field-image"><img src="img/block-services/05.png"></div>
+              <div class="field-title">Согласование</div>
+              <div class="field-description">Бесплатное предварительное согласование. Согласование наружной рекламы, сбор</div>
+            </div>
+            <div class="advantages-work__item">
+              <div class="field-image"><img src="img/block-services/06.png"></div>
+              <div class="field-title">Отзывы</div>
+              <div class="field-description">Впечатления наших клиентов от работы с РК “Вираж”</div>
+            </div>
+          </div>
+          <!-- КОНЕЦ: advantages-work-->
+        </div>
+      </div>
+      <!-- КОНЕЦ: block-advantages-->
+      <!--include: cssfile[block-questions] scriptfile[]-->
+      <!-- block-questions-->
+      <div class="block block-questions">
+        <div class="block__content">
+          <div class="block__info">
+            <h2 class="block__title">КОГДА ВЫ РЕШАЕТЕ РАСШИРИТЬ БИЗНЕС ИЛИ СОЗДАТЬ ЕГО «С НУЛЯ», ПЕРЕД ВАМИ ВСТАЮТ ВОПРОСЫ:
+            </h2>
+            <p>Как донести информацию о компании и ее услугах, товарах до клиентов? Какой должна быть ваша реклама - дорогостоящей или бюджетной? Можно ли ограничиться разовой рекламной акцией или уж лучше раскошелиться на продолжительную имиджевую кампанию?</p>
+            <p>Для достижения поставленной вами цели непременно потребуется ЭФФЕКТИВНАЯ реклама. Наиболее эффективным и быстрым способом создания имиджа компании, продвижения товаров и услуг является  наружная реклама. А наибольшей результативности можно добиться при  массовом размещении рекламных носителей и использовании при их создании нестандартных конструкций.</p>
+          </div>
+          <!--include: cssfile[most-questions] scriptfile[]-->
+          <!-- most-questions-->
+          <div class="most-questions">
+            <div class="field-image"><img src="img/most-questions.png"></div>
+            <div class="field-title">Наиболее частые вопросы</div>
+            <ul class="field-list">
+              <li><a href="#">А почему у вас дороже?</a></li>
+              <li><a href="#">Дешёвая вывеска - сколько стоит?</a></li>
+              <li><a href="#">Как сэкономить при заказе вывески?</a></li>
+              <li><a href="#">Что учитывать при выборе рекламной компании</a></li>
+            </ul>
+          </div>
+          <!-- КОНЕЦ: most-questions-->
+        </div>
+      </div>
+      <!-- КОНЕЦ: block-questions-->
+      <!--include: cssfile[block-about] scriptfile[]-->
+      <!-- block-about-->
+      <div class="block block-about block-section">
+        <div class="block__content">
+          <div class="block__info">
+            <h2 class="block__title">ПРОИЗВОДСТВО НАРУЖНОЙ РЕКЛАМЫ
+            </h2>
+            <p>В нашем инструментарии – объемные буквы и световые короба, универсальные и сложные конструкции, светодиодные модули и неоновые световые системы, высококачественная цифровая и широкоформатная печать. С их помощью мы создаём оригинальные по дизайну вывески и консоли, экономичные информационные планшеты и мобильные стритлайны, трёхмерные вертикальные стелы и грандиозные крышные установки.</p>
+            <p>Для комплексного решения рекламных задач мы предлагаем своим клиентам размещение наружной рекламы на транспорте, разработку логотипа и фирменного стиля, изготовление рекламы на фасадах и в интерьере. Все конструкции изготавливаются  на собственной производственной базе, из высококачественных современных материалов, по технологиям, безупречно зарекомендовавшим себя на протяжении многих лет.</p>
+            <div class="block__imgs"><img src="img/block-about/01.jpg"><img src="img/block-about/02.jpg">
+            </div>
+          </div>
+          <!--include: cssfile[production-advantage] scriptfile[]-->
+          <!-- production-advantage-->
+          <div class="production-advantage">
+            <div class="production-advantage__item">
+              <div class="field-image"><img src="img/production-advantage/01.png"></div>
+              <div class="field-title">Уникальная по надёжности продукция</div>
+              <div class="field-description">Опыт работы в производстве и размещении объектов наружной рекламы позволяет нашей компании давать 2 года гарантии на рекламную продукцию и оперативные сроки выполнения работ.</div>
+            </div>
+            <div class="production-advantage__item">
+              <div class="field-image"><img src="img/production-advantage/02.png"></div>
+              <div class="field-title">Доступные цены</div>
+              <div class="field-description">Стоимость нашей продукции разумна, к тому же мы практикуем гибкую ценовую политику. Плоды наших трудов, размещённые на улицах города, органично вписываются в его уникальную архитектуру и эффективно работают на экономическое благополучие наших заказчиков.</div>
+            </div>
+            <div class="production-advantage__item">
+              <div class="field-image"><img src="img/production-advantage/03.png"></div>
+              <div class="field-title">Увеличьте продажи</div>
+              <div class="field-description">На 15% с яркой вывеской. Сэкономьте 15% на стоимости вывески из букв при согласовании у нас.</div>
+            </div>
+          </div>
+          <!-- КОНЕЦ: production-advantage-->
+          <!--include: cssfile[store-traffic] scriptfile[]-->
+          <!-- store-traffic-->
+          <div class="store-traffic">
+            <h2>Увеличьте посещаемость магазина на 12-25% с новой вывеской за 10 дней</h2>
+            <div class="store-traffic__item">
+              <div class="field-image"><img src="img/store-traffic/01.png"></div>
+              <div class="field-title">Изготовление</div>
+            </div>
+            <div class="store-traffic__item">
+              <div class="field-image"><img src="img/store-traffic/02.png"></div>
+              <div class="field-title">Доставка</div>
+            </div>
+            <div class="store-traffic__item">
+              <div class="field-image"><img src="img/store-traffic/03.png"></div>
+              <div class="field-title">Монтаж</div>
+            </div>
+            <div class="store-traffic__item">
+              <div class="field-image"><img src="img/store-traffic/04.png"></div>
+              <div class="field-title">Согласование</div>
+            </div>
+            <div class="store-traffic__item">
+              <div class="field-image"><img src="img/store-traffic/05.png"></div>
+              <div class="field-title">Качественное увеличение ваших продаж</div>
+            </div>
+          </div>
+          <!-- КОНЕЦ: store-traffic-->
+        </div>
+        <div class="block__footer"><a href="#" class="btn btn-primary">Заказать</a>
+        </div>
+      </div>
+      <!-- КОНЕЦ: block-about-->
+      <!--include: cssfile[block-agreement] scriptfile[]-->
+      <!-- block-agreement-->
+      <div class="block block-agreement">
+        <div class="block__content">
+          <div class="block__info">
+            <h2 class="block__title">Согласование наружной рекламы в спб и ленинградской области
+            </h2>
+            <p>Процедура согласования будущей рекламной конструкции с соответствующими инстанциями – первый и самый важный этап на пути её изготовления. РК «Вираж» оказывает услуги по согласованию и регистрации  в Санкт-Петербурге и Москве, включая комплексную подготовку всех необходимых для регистрации документов в соответствии со строгими требованиями, установленными правилами размещения объектов наружной рекламы.</p>
+            <ul>
+              <li>Согласование рекламы с городом по самой выгодной цене 14 т. руб.</li>
+              <li>Всё включено.</li>
+              <li>Оплата только за результат.</li>
+              <li>Предварительное согласование бесплатно.</li>
+            </ul>
+          </div>
+          <!--include: cssfile[information] scriptfile[]-->
+          <!-- information-->
+          <div class="information">
+            <div class="field-image"><img src="img/information/01.png"></div>
+            <div class="field-title">Информация</div>
+            <div class="field-description">Обязательным условием размещения объектов наружной рекламы на улицах города является наличие разрешительной документации на их установку.
+              <div><b>Предварительное согласование всего за 2-3 дня.</b></div>
+            </div>
+          </div>
+          <!-- КОНЕЦ: information-->
+        </div>
+      </div>
+      <!-- КОНЕЦ: block-agreement-->
+      <!--include: cssfile[block-special-offers] scriptfile[]-->
+      <!-- block-special-offers-->
+      <div class="block block-special-offers block-section">
+        <div class="block__header">
+          <h2 class="block__title">Специальные предложения
+          </h2>
+        </div>
+        <div class="block__content">
+          <p>Стоимость нашей продукции разумна, к тому же мы практикуем гибкую ценовую политику. Плоды наших трудов, размещённые на улицах Санкт-Петербурга, органично вписываются в его уникальную архитектуру и эффективно работают на экономическое благополучие наших заказчиков.</p>
+          <!--include: cssfile[teaser-special-offers] scriptfile[]-->
+          <!-- teaser-special-offers-->
+          <div class="teaser-special-offers">
+            <div class="field-image"><img src="img/teaser-special-offers/01.jpg"></div>
+            <div class="field-title"><a href="#">Скидка 20% для новых компаний!</a></div>
+            <div class="field-description">Скидка 20% на услуги: дизайн, демонтажные/монтажные работы, согласование!*Акция действует для компаний зарегистрированных в течении календарного года(магазины, салоны красоты и прочее...)</div>
+          </div>
+          <div class="teaser-special-offers">
+            <div class="field-image"><img src="img/teaser-special-offers/02.jpg"></div>
+            <div class="field-title"><a href="#">Временная вывеска и её монтаж в подарок!</a></div>
+            <div class="field-description">При заказе вывески - Вам предоставляется временная вывеска и её монтаж СОВЕРШЕННО БЕСПЛАТНО! *Вывеска в виде баннерного полотна площадью не более 10 кв.м. При стоимости вывески от 100 т. руб.</div>
+          </div>
+          <div class="teaser-special-offers">
+            <div class="field-image"><img src="img/teaser-special-offers/03.jpg"></div>
+            <div class="field-title"><a href="#">Полноцветная печать 720 DPI по себестоимости!</a></div>
+            <div class="field-description">При заказе вывески, полноцветная печать по себестоимости! Ламинация -150 руб. м2 и бесплатный макет. Изготовление от 1 дня!</div>
+          </div>
+          <div class="teaser-special-offers">
+            <div class="field-image"><img src="img/teaser-special-offers/04.jpg"></div>
+            <div class="field-title"><a href="#">Любая из услуг совершенно БЕСПЛАТНО:</a></div>
+            <div class="field-description">На выбор: осмотр, замер, демонтаж старой вывеска или утилизацию в подарок при заказе вывески! При стоимости вывески от 100 т. руб.</div>
+          </div>
+          <!-- КОНЕЦ: teaser-special-offers-->
+        </div>
+        <div class="block__footer"><a href="#" class="btn btn-primary">Все акции</a>
+        </div>
+      </div>
+      <!-- КОНЕЦ: block-special-offers-->
+    </main>
+    <!--include: cssfile[footer] scriptfile[]-->
+    <!-- footer-->
+    <div class="footer">
+      <div class="footer__col footer__col_one">
+        <div class="footer__logo"><img src="img/logo-footer.png">
+        </div><a href="tel:+78124554102" class="footer__phone">+7 812 455-41-02</a><a href="mailto:amo@viraj-spb.ru" class="footer__email">amo@viraj-spb.ru</a>
+        <div class="footer__location">г.Санкт-Петербург, пр.Елизарова, д.36а
+        </div>
+        <div class="footer__time">Пн-Пт с 9:00 до 18:00
+        </div>
+        <div class="footer__copyright">
+          <div>РПК "Вираж" © 2004 - 2019</div>
+          <div>Все права защищены</div>
+        </div>
+      </div>
+      <div class="footer__col footer__col_two">
+        <h4>Новости рекламы</h4>
+        <!--include: cssfile[teaser-news] scriptfile[]-->
+        <!-- teaser-news-->
+        <div class="teaser-news">
+          <div class="field-title"><a href="#">Наружная реклама, которая...</a></div>
+          <div class="field-description">Изготовление рекламы в СПб загоняют в подполье. Как и...</div>
+        </div>
+        <!-- КОНЕЦ: teaser-news-->
+        <!--include: cssfile[teaser-news] scriptfile[]-->
+        <!-- teaser-news-->
+        <div class="teaser-news">
+          <div class="field-title"><a href="#">На петербургском рынке наружной...</a></div>
+          <div class="field-description">Комитет по печати и взаимодействию со СМИ, курирующий...</div>
+        </div>
+        <!-- КОНЕЦ: teaser-news-->
+        <!--include: cssfile[teaser-news] scriptfile[]-->
+        <!-- teaser-news-->
+        <div class="teaser-news">
+          <div class="field-title"><a href="#">Сколько стоит вывеска? Советы,...</a></div>
+          <div class="field-description">Современный рынок подразумевает конкуренцию и...</div>
+        </div>
+        <!-- КОНЕЦ: teaser-news-->
+      </div>
+      <div class="footer__col footer__col_three">
+        <h4>Это интересно</h4>
+        <!--include: cssfile[teaser-news] scriptfile[]-->
+        <!-- teaser-news-->
+        <div class="teaser-news">
+          <div class="field-title"><a href="#">Как сделать наружную рекламу...</a></div>
+          <div class="field-description">Вопрос об возврате инвестиций волнует каждого...</div>
+        </div>
+        <!-- КОНЕЦ: teaser-news-->
+        <!--include: cssfile[teaser-news] scriptfile[]-->
+        <!-- teaser-news-->
+        <div class="teaser-news">
+          <div class="field-title"><a href="#">И всё-таки, сколько должна...</a></div>
+          <div class="field-description">Эта статья предназначалась для нашего заказчика, но...</div>
+        </div>
+        <!-- КОНЕЦ: teaser-news-->
+        <!--include: cssfile[teaser-news] scriptfile[]-->
+        <!-- teaser-news-->
+        <div class="teaser-news">
+          <div class="field-title"><a href="#">И всё-таки, сколько должна...</a></div>
+          <div class="field-description">Эта статья предназначалась для нашего заказчика, но...</div>
+        </div>
+        <!-- КОНЕЦ: teaser-news-->
+      </div>
+      <div class="footer__col footer__col_four">
+        <h4>Презентации</h4><a href="#" class="footer__pdf">Online презентация</a><a href="#" class="footer__pdf">По полноцветной печати</a><a href="#" class="footer__pdf">По фрезерной резке</a><a href="#">Политика конфиденциальности</a>
+      </div>
+    </div>
+    <!-- КОНЕЦ: footer-->
+  </body>
+</html>

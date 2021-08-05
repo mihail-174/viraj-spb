@@ -1,0 +1,2 @@
+.block-about{display:grid;grid-template-columns:repeat(var(--grid-column),1fr);gap:0 var(--grid-gap)}.block-about .block__content{display:contents}.block-about .block__imgs{display:grid;gap:16px;grid-column:2/span 7;grid-template-columns:1fr 1fr}.block-about .block__info{grid-column:2/span 7}.block-about .production-advantage{grid-column:9/span 5}.block-about .store-traffic{grid-column:2/-2}.block-about .btn{width:15.625rem}.block-about .block__footer{margin-top:2.5rem}
+/*# sourceMappingURL=maps/block-about.css.map */

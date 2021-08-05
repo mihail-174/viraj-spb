@@ -1,0 +1,2 @@
+.advantages-work{display:grid;grid-template-columns:repeat(3,1fr)}.advantages-work .field-title{font-weight:700}.advantages-work .field-description{font-size:var(--font-size-sm)}.advantages-work__item{background:#fff;border:1px solid #dfe1e3;padding:2.5rem 1rem;text-align:center;display:grid;gap:1.25rem;box-shadow:0 0 10px transparent;transition:box-shadow .2s ease-in-out;margin:0 -1px -1px 0;align-content:flex-start}.advantages-work__item:hover{box-shadow:0 0 10px rgba(35,71,95,.15);z-index:1}
+/*# sourceMappingURL=maps/advantages-work.css.map */
